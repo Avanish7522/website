@@ -343,6 +343,16 @@
     50% { opacity: 0.6; transform: scale(0.85); }
   }
 
+  /* Spinner for form submit */
+  .spinner {
+    border: 3px solid rgba(255,255,255,0.25);
+    border-top: 3px solid var(--green);
+    border-radius: 50%;
+    width: 18px; height: 18px; display: inline-block; vertical-align: middle;
+    animation: spin 0.8s linear infinite; margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     nav { padding: 16px 20px; }
@@ -569,17 +579,17 @@
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">First name</label>
-          <input type="text" class="form-input" placeholder="Your name" id="fname">
+          <input type="text" name="name" class="form-input" placeholder="Your name" id="fname">
         </div>
         <div class="form-group">
           <label class="form-label">WhatsApp number</label>
-          <input type="tel" class="form-input" placeholder="+91 98765 43210" id="phone">
+          <input type="tel" name="phone" class="form-input" placeholder="+91 98765 43210" id="phone">
         </div>
       </div>
 
       <div class="form-group">
         <label class="form-label">Area in Surat</label>
-        <select class="form-select" id="area">
+        <select name="area" class="form-select" id="area">
           <option value="">Select your area</option>
           <option>Vesu</option>
           <option>Althan</option>
@@ -591,7 +601,7 @@
 
       <div class="form-group">
         <label class="form-label">Which bowl interests you?</label>
-        <select class="form-select" id="bowl">
+        <select name="bowl" class="form-select" id="bowl">
           <option value="">Select your preference</option>
           <option>Chicken Power Bowl (Non-veg)</option>
           <option>Paneer Power Bowl (Veg)</option>
@@ -601,7 +611,7 @@
 
       <div class="form-group">
         <label class="form-label">Protein goal</label>
-        <select class="form-select" id="goal">
+        <select name="goal" class="form-select" id="goal">
           <option value="">What's your goal?</option>
           <option>Build muscle (40g protein tier)</option>
           <option>Maintain weight (20g protein tier)</option>
@@ -609,7 +619,10 @@
         </select>
       </div>
 
-      <button class="form-btn" onclick="submitForm()">Reserve My Spot — Free ↗</button>
+      <button id="submit-btn" class="form-btn" onclick="submitForm()">
+        <span id="spinner" class="spinner" style="display:none"></span>
+        <span id="btn-text">Reserve My Spot — Free ↗</span>
+      </button>
       <div class="form-note">No payment required. We'll reach out within 24 hours on WhatsApp. Limited to first 50 registrations.</div>
     </div>
 
@@ -744,19 +757,69 @@
     const phone = document.getElementById('phone').value.trim();
     const area = document.getElementById('area').value;
     const bowl = document.getElementById('bowl').value;
+    const goal = document.getElementById('goal').value;
 
-    if (!name || !phone || !area || !bowl) {
+    // Basic validation
+    if (!name || !phone || !area || !bowl || !goal) {
       alert('Please fill in all fields to reserve your spot.');
       return;
     }
 
-    document.getElementById('reg-form-wrap').style.display = 'none';
-    document.getElementById('success-msg').style.display = 'block';
+    // Clean phone to digits and validate 10 digits
+    const digits = phone.replace(/\D/g, '');
+    if (digits.length !== 10) {
+      alert('Please enter a valid 10-digit phone number (digits only).');
+      return;
+    }
 
-    const msg = encodeURIComponent(`Hi myfitmeals! I just pre-registered on your website.\n\nName: ${name}\nPhone: ${phone}\nArea: ${area}\nBowl preference: ${bowl}\n\nLooking forward to my first order! 🌿`);
-    setTimeout(() => {
-      window.open(`https://wa.me/91XXXXXXXXXX?text=${msg}`, '_blank');
-    }, 1500);
+    // UI: show spinner, disable button
+    const submitBtn = document.getElementById('submit-btn');
+    const spinner = document.getElementById('spinner');
+    const btnText = document.getElementById('btn-text');
+    submitBtn.disabled = true;
+    spinner.style.display = 'inline-block';
+    if (btnText) btnText.style.opacity = '0.6';
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('phone', digits);
+    formData.append('area', area);
+    formData.append('bowl', bowl);
+    formData.append('goal', goal);
+
+    // Deployed Apps Script Web App URL
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyDcX3IgIkDP3sLRzS11EE2p__qJEQZ3M5uYJoSKXwV2w9SZHY9DlWINUrsYf-6Bj9q/exec';
+
+    fetch(APPS_SCRIPT_URL, { method: 'POST', body: formData, mode: 'cors' })
+      .then(res => res.json())
+      .then(resp => {
+        // hide spinner (form will be hidden next)
+        spinner.style.display = 'none';
+        submitBtn.disabled = false;
+
+        document.getElementById('reg-form-wrap').style.display = 'none';
+        document.getElementById('success-msg').style.display = 'block';
+
+        const msg = encodeURIComponent(`Hi myfitmeals! I just pre-registered on your website.\n\nName: ${name}\nPhone: ${digits}\nArea: ${area}\nBowl preference: ${bowl}\nProtein goal: ${goal}\n\nLooking forward to my first order! 🌿`);
+        setTimeout(() => {
+          window.open(`https://wa.me/91${digits}?text=${msg}`, '_blank');
+        }, 1500);
+      })
+      .catch(err => {
+        console.error('Apps Script submission failed', err);
+        // hide spinner and re-enable to allow retry
+        spinner.style.display = 'none';
+        submitBtn.disabled = false;
+        if (btnText) btnText.style.opacity = '1';
+
+        alert('Could not save your registration to the sheet right now. We will still open WhatsApp so you can contact us.');
+        document.getElementById('reg-form-wrap').style.display = 'none';
+        document.getElementById('success-msg').style.display = 'block';
+        const msg = encodeURIComponent(`Hi myfitmeals! I just pre-registered on your website.\n\nName: ${name}\nPhone: ${digits}\nArea: ${area}\nBowl preference: ${bowl}\nProtein goal: ${goal}\n\nLooking forward to my first order! 🌿`);
+        setTimeout(() => {
+          window.open(`https://wa.me/91${digits}?text=${msg}`, '_blank');
+        }, 1500);
+      });
   }
 
   // Scroll reveal
