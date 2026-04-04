@@ -504,7 +504,7 @@
       <div class="why-card">
         <div class="why-icon">🚀</div>
         <div class="why-title">Delivered to your door</div>
-        <div class="why-body">Order on WhatsApp by 12 PM, delivered fresh between 11 AM and 3 PM. No app needed, no complicated process.</div>
+        <div class="why-body">Order by 12 PM, delivered fresh between 11 AM and 3 PM. No complicated process.</div>
       </div>
     </div>
   </div>
@@ -524,12 +524,12 @@
       <div class="step">
         <div class="step-num">02</div>
         <div class="step-title">We contact you</div>
-        <div class="step-body">Our team personally reaches out on WhatsApp to confirm your preferences, address, and first order details.</div>
+        <div class="step-body">Our team personally reaches out to confirm your preferences, address, and first order details.</div>
       </div>
       <div class="step">
         <div class="step-num">03</div>
         <div class="step-title">Order by 12 PM daily</div>
-        <div class="step-body">After your first order, just WhatsApp us your meal choice every morning before 12 PM. That's it.</div>
+        <div class="step-body">After your first order, just message us your meal choice every morning before 12 PM. That's it.</div>
       </div>
       <div class="step">
         <div class="step-num">04</div>
@@ -574,7 +574,7 @@
 
     <div class="reg-form" id="reg-form-wrap">
       <div class="form-title">Claim your spot</div>
-      <div class="form-sub">Takes 30 seconds. We'll contact you personally on WhatsApp.</div>
+      <div class="form-sub">Takes 30 seconds. We'll contact you personally.</div>
 
       <div class="form-row">
         <div class="form-group">
@@ -582,7 +582,7 @@
           <input type="text" name="name" class="form-input" placeholder="Your name" id="fname">
         </div>
         <div class="form-group">
-          <label class="form-label">WhatsApp number</label>
+          <label class="form-label">Phone number</label>
           <input type="tel" name="phone" class="form-input" placeholder="+91 98765 43210" id="phone">
         </div>
       </div>
@@ -623,13 +623,13 @@
         <span id="spinner" class="spinner" style="display:none"></span>
         <span id="btn-text">Reserve My Spot — Free ↗</span>
       </button>
-      <div class="form-note">No payment required. We'll reach out within 24 hours on WhatsApp. Limited to first 50 registrations.</div>
+      <div class="form-note">No payment required. We'll reach out within 24 hours. Limited to first 50 registrations.</div>
     </div>
 
     <div class="success-msg" id="success-msg">
       <div class="success-icon">🎉</div>
       <div class="success-title">You're on the list!</div>
-      <div class="success-sub" style="color:rgba(245,240,232,0.7)">Thank you for registering with myfitmeals.<br>We'll personally reach out on WhatsApp within 24 hours.<br><br>Get ready for Surat's freshest macro-tracked meal. 🌿</div>
+      <div class="success-sub" style="color:rgba(245,240,232,0.7)">Thank you for registering with myfitmeals.<br>We'll personally reach out within 24 hours.<br><br>Get ready for Surat's freshest macro-tracked meal. 🌿</div>
     </div>
   </div>
 </section>
@@ -678,7 +678,7 @@
     <div class="faq-list" style="text-align: left;">
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">How do I order after I pre-register?</button>
-        <div class="faq-a">Once you pre-register, we'll contact you personally on WhatsApp and walk you through everything. After your first order, it's simple — just WhatsApp us your meal choice every morning before 12 PM and we'll deliver between 11 AM and 3 PM.</div>
+        <div class="faq-a">Once you pre-register, we'll contact you personally and walk you through everything. After your first order, it's simple — just message us your meal choice every morning before 12 PM and we'll deliver between 11 AM and 3 PM.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">Which areas do you deliver to?</button>
@@ -694,11 +694,11 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">How do I pay?</button>
-        <div class="faq-a">We accept UPI payments — GPay, PhonePe, and Paytm. Pay after your order is confirmed on WhatsApp. No advance payment required for pre-registered customers.</div>
+        <div class="faq-a">We accept UPI payments — GPay, PhonePe, and Paytm. Pay after your order is confirmed with us. No advance payment required for pre-registered customers.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">What if I have a food allergy or dietary restriction?</button>
-        <div class="faq-a">Tell us when you pre-register or before you order on WhatsApp. We'll let you know if we can accommodate. We also offer mild, medium, and spicy versions of all bowls — just mention your preference.</div>
+        <div class="faq-a">Tell us when you pre-register or before you order. We'll let you know if we can accommodate. We also offer mild, medium, and spicy versions of all bowls — just mention your preference.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">Is there a minimum order?</button>
@@ -726,7 +726,7 @@
       <div class="footer-col">
         <h4>Contact</h4>
         <a href="https://instagram.com/myfitmeals" target="_blank">@myfitmeals on Instagram</a>
-        <a href="#">WhatsApp to order</a>
+        <a href="#">Contact to order</a>
         <a href="#register">Pre-register</a>
         <a href="#">Vesu, Surat, Gujarat</a>
       </div>
@@ -799,11 +799,6 @@
 
         document.getElementById('reg-form-wrap').style.display = 'none';
         document.getElementById('success-msg').style.display = 'block';
-
-        const msg = encodeURIComponent(`Hi myfitmeals! I just pre-registered on your website.\n\nName: ${name}\nPhone: ${digits}\nArea: ${area}\nBowl preference: ${bowl}\nProtein goal: ${goal}\n\nLooking forward to my first order! 🌿`);
-        setTimeout(() => {
-          window.open(`https://wa.me/91${digits}?text=${msg}`, '_blank');
-        }, 1500);
       })
       .catch(err => {
         console.error('Apps Script submission failed', err);
@@ -812,13 +807,9 @@
         submitBtn.disabled = false;
         if (btnText) btnText.style.opacity = '1';
 
-        alert('Could not save your registration to the sheet right now. We will still open WhatsApp so you can contact us.');
+        alert('Could not save your registration to the sheet right now. Please try again later.');
         document.getElementById('reg-form-wrap').style.display = 'none';
         document.getElementById('success-msg').style.display = 'block';
-        const msg = encodeURIComponent(`Hi myfitmeals! I just pre-registered on your website.\n\nName: ${name}\nPhone: ${digits}\nArea: ${area}\nBowl preference: ${bowl}\nProtein goal: ${goal}\n\nLooking forward to my first order! 🌿`);
-        setTimeout(() => {
-          window.open(`https://wa.me/91${digits}?text=${msg}`, '_blank');
-        }, 1500);
       });
   }
 
