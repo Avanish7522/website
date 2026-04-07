@@ -114,6 +114,20 @@
   }
   .btn-secondary:hover { background: var(--green); color: var(--cream); }
 
+  /* ── HERO PROMO ── */
+  .hero-promo {
+    font-size: 14px; font-weight: 500; color: var(--sage);
+    margin-bottom: 32px; animation: fadeUp 0.8s 0.25s ease both;
+    letter-spacing: 0.02em;
+  }
+  .promo-highlight { color: var(--saffron); font-weight: 700; }
+  .launch-offer {
+    font-size: 12px; font-weight: 600; color: var(--sage);
+    margin-bottom: 24px; letter-spacing: 0.05em;
+    text-transform: uppercase; animation: fadeUp 0.8s 0.35s ease both;
+  }
+  .launch-offer .discount { color: var(--saffron); }
+
   .hero-stats {
     display: flex; gap: 48px; margin-top: 60px; flex-wrap: wrap; justify-content: center;
     animation: fadeUp 0.8s 0.5s ease both;
@@ -383,7 +397,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
-  <a href="#register" class="nav-cta">Pre-register Free</a>
+  <a href="#register" class="nav-cta">Pre-register & Get 50% OFF</a>
 </nav>
 
 <!-- HERO -->
@@ -392,9 +406,11 @@
   <div class="hero-eyebrow">Gujarat's first macro-tracked meal service</div>
   <h1 class="hero-title"><span class="accent">my</span>fit<br>meals</h1>
   <p class="hero-tagline">Eat well. Every day.</p>
+  <p class="hero-promo">🚀 Launching Soon — Pre-register now & get up to <span class="promo-highlight">50% OFF</span> on your first order</p>
   <p class="hero-desc">Fresh, high-protein meals made for Surat's gym and fitness community. Every macro counted. Every meal cooked fresh. No shortcuts, ever.</p>
+  <p class="launch-offer">Limited launch offer — up to <span class="discount">50% OFF</span> for early users</p>
   <div class="hero-btns">
-    <a href="#register" class="btn-primary">Pre-register — It's Free</a>
+    <a href="#register" class="btn-primary">Pre-register & Get 50% OFF</a>
     <a href="#menu" class="btn-secondary">See the Menu</a>
   </div>
   <div class="hero-stats">
@@ -741,7 +757,7 @@
 <!-- FLOATING CTA -->
 <a href="#register" class="float-cta">
   <div class="float-dot"></div>
-  Pre-register Free
+  Get 50% OFF
 </a>
 
 <script>
